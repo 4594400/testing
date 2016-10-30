@@ -16,8 +16,7 @@ public class TaskDaoJdbcImpl implements TaskDao {
 
     @Override
     public void save(Task value) {
-        try (Connection connection = dbConnector.getConnection();
-             PreparedStatement ps = connection.prepareStatement("INSERT INTO tasks (name, deadline, priority) VALUES (?,?,?)")) {
+        try (PreparedStatement ps = dbConnector.getConnection().prepareStatement("INSERT INTO tasks (name, deadline, priority) VALUES (?,?,?)")) {
             ps.setString(1, value.getName());
             ps.setDate(2, value.getDeadline());
             ps.setString(3, value.getPriority().toString());
