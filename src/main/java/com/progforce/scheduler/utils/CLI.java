@@ -113,7 +113,7 @@ public class CLI {
         }
     }
 
-    private String getInput() {
+    public String getInput() {
         try {
             this.outStream.print("> ");
             return inReader.readLine();
@@ -122,30 +122,30 @@ public class CLI {
         }
     }
 
-    private void writeOutput(String str) {
+    public void writeOutput(String str) {
         this.outStream.println(str);
     }
 
-    private void printMainMenu() {
+    public void printMainMenu() {
         writeOutput("   ---------- Select action: ----------");
-        writeOutput("   1. ADD NEW TASK:      | Press 1");
-        writeOutput("   2. SHOW ALL OF TASKS: | Press 2");
-        writeOutput("   3. EXIT:              | Press 0");
+        writeOutput("   1. ADD NEW TASK:      | Enter 1");
+        writeOutput("   2. SHOW ALL OF TASKS: | Enter 2");
+        writeOutput("   3. EXIT:              | Enter 0");
     }
 
-    private void printSubMenu() {
+    public void printSubMenu() {
         writeOutput("   --------------- Select action: ---------------");
-        writeOutput("   a. SET \"DONE\" FOR TASK              | Press a");
-        writeOutput("   b. SHOW ALL FINISHED TASKS          | Press b");
-        writeOutput("   c. MAIN MENU                        | Press c");
+        writeOutput("   a. SET \"DONE\" FOR TASK              | Enter a");
+        writeOutput("   b. SHOW ALL FINISHED TASKS          | Enter b");
+        writeOutput("   c. MAIN MENU                        | Enter c");
     }
 
     public void printPriorities() {
         writeOutput("   ---------- Select priority: ----------");
-        writeOutput("   1. URGENT      | press 1;");
-        writeOutput("   2. HIGH        | press 2;");
-        writeOutput("   3. MEDIUM      | press 3;");
-        writeOutput("   4. LOW         | press 4;");
+        writeOutput("   1. URGENT      | Enter 1;");
+        writeOutput("   2. HIGH        | Enter 2;");
+        writeOutput("   3. MEDIUM      | Enter 3;");
+        writeOutput("   4. LOW         | Enter 4;");
     }
 
     public void printTaskList(List<Task> list) {
@@ -160,7 +160,7 @@ public class CLI {
         writeOutput(result.toString());
     }
 
-    private void printSeparator(StringBuilder builder) {
+    public void printSeparator(StringBuilder builder) {
         builder.append("-------------------------------------------------------------------------------------").append(NEWLINE);
     }
 }

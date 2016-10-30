@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertyLoader {
 
-    private String propFileName = "application.properties";
+    private final String propFileName = "application.properties";
     private InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
     private Properties property = new Properties();
     private String url;
