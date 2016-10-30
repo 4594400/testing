@@ -13,6 +13,12 @@ public class Task {
     public Task() {
     }
 
+    public Task(String name, Date deadline, Priority priority) {
+        this.name = name;
+        this.deadline = deadline;
+        this.priority = priority;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -51,12 +57,6 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Task(String name, Date deadline, Priority priority) {
-        this.name = name;
-        this.deadline = deadline;
-        this.priority = priority;
     }
 
 
