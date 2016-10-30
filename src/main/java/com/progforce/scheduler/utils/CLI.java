@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class CLI {
     private static final String NEWLINE = System.getProperty("line.separator");
-    private final BufferedReader inReader;
-    private final PrintStream outStream;
+    private BufferedReader inReader;
+    private PrintStream outStream;
     TaskDaoJdbcImpl taskDaoJdbc = new TaskDaoJdbcImpl();
     TaskService taskService = new TaskService();
 
