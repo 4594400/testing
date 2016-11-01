@@ -1,18 +1,17 @@
 package com.progforce.scheduler.utils;
 
-import com.progforce.scheduler.dao.TaskDao;
 import com.progforce.scheduler.model.Priority;
 import com.progforce.scheduler.model.Task;
 import com.progforce.scheduler.service.TaskService;
-import com.progforce.scheduler.service.impl.TaskServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +31,6 @@ public class CLITest {
     @Mock
     TaskService taskService;
 
-
-    public TaskService getTaskService() {
-        return taskService;
-    }
 
     /**
      * Make sure the CLI initially prints a welcome message
@@ -63,16 +58,51 @@ public class CLITest {
         validateMockitoUsage();
 
         List<String> output = captureOutput();
+        //System.out.println(output.toString());
         assertEquals("Should have 15 output calls", 15, output.size());
         verify(taskService, times(2)).getAll();
         assertEquals(2, taskService.getAll().size());
-
     }
+
+    @Test
+    public void testGetTaskById() {
+        //TODO
+    }
+
+    @Test
+    public void testGetAllFinishedTasks() {
+        List<Task> tasks = new ArrayList<>();
+        Task task1 = new Task(1, "Task1", Date.valueOf("2015-12-10"), Priority.HIGH, "DONE");
+        Task task2 = new Task(2, "Task2", Date.valueOf("2015-11-15"), Priority.URGENT, "DONE");
+        tasks.add(task1);
+        tasks.add(task2);
+        when(taskService.getAllFinishedTasks()).thenReturn(tasks);
+        runCliWithInput("2", "b");
+        verify(taskService).getAllFinishedTasks();
+        assertEquals(2, taskService.getAllFinishedTasks().size());
+    }
+
+    @Test
+    public void testCheckExpiredTask() {
+        doNothing().when(taskService).checkExpiredTask(anyList());
+        runCliWithInput("2");
+        verify(taskService).checkExpiredTask(anyList());
+    }
+
+    @Test
+    public void testSetStatusDone() {
+        //TODO
+    }
+
+
+
+
+
 
     private List<String> captureOutput() {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
-        // 9 times means we printed Welcome, the input prompt twice, and the 'help' screen
+        // 15 times means we printed Welcome, the input prompt 3, and the 'help' screen
         verify(testOut, atLeastOnce()).println(captor.capture());
 
         return captor.getAllValues();
@@ -86,7 +116,7 @@ public class CLITest {
 
         ByteArrayInputStream in = new ByteArrayInputStream(builder.toString().getBytes());
         CLI cli = new CLI(in, testOut);
-        cli.setTaskService(getTaskService());
+        cli.setTaskService(taskService);
         cli.startEventLoop();
 
         return cli;
