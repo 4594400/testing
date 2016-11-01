@@ -6,6 +6,7 @@ import com.progforce.scheduler.dao.impl.TaskDaoJdbcImpl;
 import com.progforce.scheduler.model.Priority;
 import com.progforce.scheduler.model.Task;
 import com.progforce.scheduler.service.TaskService;
+import com.progforce.scheduler.service.impl.TaskServiceImpl;
 
 import java.io.*;
 import java.sql.Date;
@@ -16,8 +17,8 @@ public class CLI {
     private static final String NEWLINE = System.getProperty("line.separator");
     private final BufferedReader inReader;
     private final PrintStream outStream;
-    TaskDao taskDao = new TaskDaoJdbcImpl();
-    TaskService taskService = new TaskService();
+    //TaskDao taskDao = new TaskDaoJdbcImpl();
+    TaskService taskService = new TaskServiceImpl();
 
     public CLI(InputStream inputStream, PrintStream outStream) {
         this.inReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -68,13 +69,13 @@ public class CLI {
                             System.out.println();
                             continue;
                     }
-                    taskDao.save(new Task(nameOfTask, deadline, priority));
+                    taskService.save(new Task(nameOfTask, deadline, priority));
                     writeOutput("Task added!");
                     writeOutput(NEWLINE);
                     continue;
                 case "2":
-                    taskService.checkExpiredTask(taskDao.getAll());
-                    printTaskList(taskDao.getAll());
+                    taskService.checkExpiredTask(taskService.getAll());
+                    printTaskList(taskService.getAll());
                     writeOutput(NEWLINE);
 
                     boolean flag = true;
@@ -96,10 +97,10 @@ public class CLI {
                                     break;
                                 }
                                 taskService.setStatusDone(id);
-                                printTaskList(taskDao.getAll());
+                                printTaskList(taskService.getAll());
                                 break;
                             case "b":
-                                printTaskList(taskDao.getAllFinishedTasks());
+                                printTaskList(taskService.getAllFinishedTasks());
                                 break;
                             case "c":
                                 flag = false;

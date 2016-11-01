@@ -1,11 +1,7 @@
 package com.progforce.scheduler.utils;
 
 import com.progforce.scheduler.dao.TaskDao;
-import com.progforce.scheduler.dao.impl.TaskDaoJdbcImpl;
-import com.progforce.scheduler.model.Priority;
-import com.progforce.scheduler.model.Task;
-import com.progforce.scheduler.service.TaskService;
-import org.junit.Before;
+import com.progforce.scheduler.service.impl.TaskServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -14,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.*;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +26,7 @@ public class CLITest {
     private InputStream testIn;
 
     @Mock
-    TaskService taskService;
-
-    @Mock
-    TaskDao taskDao;
+    TaskServiceImpl taskService;
 
     @InjectMocks
     CLI cli;
@@ -58,15 +50,15 @@ public class CLITest {
         Task task = new Task("Task1", Date.valueOf("2015-12-12"), Priority.HIGH);
         list.add(task);*/
 
-        //when(cli.taskDaoJdbc.getAll()).thenReturn(new ArrayList<>());
-        doNothing().when(cli.taskDao.getAll());
+        when(cli.taskService.getAll()).thenReturn(new ArrayList<>());
+        //doNothing().when(cli.taskDao.getAll());
         doNothing().when(taskService).checkExpiredTask(anyList());
         runCliWithInput("2");
         validateMockitoUsage();
 
         List<String> output = captureOutput();
         System.out.println(output.toString());
-        verify(taskDao).getAll();
+        verify(taskService).getAll();
         //verify(testOut, atLeastOnce()).println(captor.capture());
         assertEquals("Should have 16 output calls", 16, output.size());
 
