@@ -42,7 +42,7 @@ public class CLITest {
         verify(testOut, atLeastOnce()).println(captor.capture());
 
         String message = captor.getValue();
-        assertTrue("The CLI should initially print a welcome message", message.startsWith("*** WELCOME"));
+        assertTrue("The CLI should initially print a welcome message", message.startsWith("*** WEL"));
     }
 
     @Test
@@ -65,7 +65,6 @@ public class CLITest {
         validateMockitoUsage();
 
         List<String> output = captureOutput();
-        //System.out.println(output.toString());
         assertEquals("Should have 15 output calls", 15, output.size());
         verify(taskService, times(2)).getAll();
         assertEquals(2, taskService.getAll().size());
@@ -104,10 +103,6 @@ public class CLITest {
         runCliWithInput("2", "a", "1");
         verify(taskService).setStatusDone(anyInt());
     }
-
-
-
-
 
 
     private List<String> captureOutput() {
