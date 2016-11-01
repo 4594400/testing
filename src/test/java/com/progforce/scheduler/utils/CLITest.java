@@ -46,6 +46,13 @@ public class CLITest {
     }
 
     @Test
+    public void testSaveTask() {
+        doNothing().when(taskService).save(anyObject());
+        runCliWithInput("1", "NEW TASK", "2016-02-01", "2");
+        verify(taskService).save(anyObject());
+    }
+
+    @Test
     public void testShowAllOfTasks() {
         List<Task> tasks = new ArrayList<>();
         Task task1 = new Task(1, "Task1", Date.valueOf("2015-12-12"), Priority.HIGH, "TODO");
@@ -66,7 +73,9 @@ public class CLITest {
 
     @Test
     public void testGetTaskById() {
-        //TODO
+        Task task = new Task(3, "Task3", Date.valueOf("2015-05-06"), Priority.HIGH, "EXPIRED");
+        when(taskService.getById(anyInt())).thenReturn(task);
+        assertEquals("Task3", taskService.getById(3).getName());
     }
 
     @Test
@@ -91,7 +100,9 @@ public class CLITest {
 
     @Test
     public void testSetStatusDone() {
-        //TODO
+        doNothing().when(taskService).setStatusDone(anyInt());
+        runCliWithInput("2", "a", "1");
+        verify(taskService).setStatusDone(anyInt());
     }
 
 
@@ -102,7 +113,7 @@ public class CLITest {
     private List<String> captureOutput() {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
-        // 15 times means we printed Welcome, the input prompt 3, and the 'help' screen
+        // 15 times means we printed Welcome, the 'menu' screen, result, and the 'submenu' screen
         verify(testOut, atLeastOnce()).println(captor.capture());
 
         return captor.getAllValues();
