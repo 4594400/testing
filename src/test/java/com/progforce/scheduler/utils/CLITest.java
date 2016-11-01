@@ -51,7 +51,7 @@ public class CLITest {
     }
 
     @Test
-    public void testShowAllOfTasks() throws Exception {
+    public void testShowAllOfTasks() {
         List<Task> tasks = new ArrayList<>();
         Task task1 = new Task(1, "Task1", Date.valueOf("2015-12-12"), Priority.HIGH, "TODO");
         Task task2 = new Task(2, "Task2", Date.valueOf("2015-12-13"), Priority.URGENT, "DONE");
