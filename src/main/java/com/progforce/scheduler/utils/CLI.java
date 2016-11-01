@@ -1,6 +1,7 @@
 package com.progforce.scheduler.utils;
 
 
+import com.progforce.scheduler.dao.TaskDao;
 import com.progforce.scheduler.dao.impl.TaskDaoJdbcImpl;
 import com.progforce.scheduler.model.Priority;
 import com.progforce.scheduler.model.Task;
@@ -15,7 +16,7 @@ public class CLI {
     private static final String NEWLINE = System.getProperty("line.separator");
     private final BufferedReader inReader;
     private final PrintStream outStream;
-    TaskDaoJdbcImpl taskDaoJdbc = new TaskDaoJdbcImpl();
+    TaskDao taskDao = new TaskDaoJdbcImpl();
     TaskService taskService = new TaskService();
 
     public CLI(InputStream inputStream, PrintStream outStream) {
@@ -29,6 +30,9 @@ public class CLI {
         while (true) {
             printMainMenu();
             String input = getInput();
+            if(input==null){
+                break;
+            }
             //MAIN MENU
             switch (input) {
                 case "1":
@@ -64,19 +68,22 @@ public class CLI {
                             System.out.println();
                             continue;
                     }
-                    taskDaoJdbc.save(new Task(nameOfTask, deadline, priority));
+                    taskDao.save(new Task(nameOfTask, deadline, priority));
                     writeOutput("Task added!");
                     writeOutput(NEWLINE);
                     continue;
                 case "2":
-                    taskService.checkExpiredTask(taskDaoJdbc.getAll());
-                    printTaskList(taskDaoJdbc.getAll());
+                    taskService.checkExpiredTask(taskDao.getAll());
+                    printTaskList(taskDao.getAll());
                     writeOutput(NEWLINE);
 
                     boolean flag = true;
                     while (flag) {
                         printSubMenu();
                         String subInput = getInput();
+                        if(subInput==null){
+                            break;
+                        }
                         // SUBMENU
                         switch (subInput) {
                             case "a":
@@ -89,10 +96,10 @@ public class CLI {
                                     break;
                                 }
                                 taskService.setStatusDone(id);
-                                printTaskList(taskDaoJdbc.getAll());
+                                printTaskList(taskDao.getAll());
                                 break;
                             case "b":
-                                printTaskList(taskDaoJdbc.getAllFinishedTasks());
+                                printTaskList(taskDao.getAllFinishedTasks());
                                 break;
                             case "c":
                                 flag = false;

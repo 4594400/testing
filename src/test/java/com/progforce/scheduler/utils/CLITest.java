@@ -26,15 +26,15 @@ import static org.mockito.Mockito.*;
 public class CLITest {
 
     @Mock
-    PrintStream testOut;
+    private PrintStream testOut;
     @Mock
-    InputStream testIn;
+    private InputStream testIn;
 
     @Mock
     TaskService taskService;
 
     @Mock
-    TaskDao taskDao = new TaskDaoJdbcImpl();
+    TaskDao taskDao;
 
     @InjectMocks
     CLI cli;
@@ -54,19 +54,21 @@ public class CLITest {
 
     @Test
     public void testShowAllOfTasks() throws Exception {
-       /* List<Task> list = new ArrayList<>();
+        /*List<Task> list = new ArrayList<>();
         Task task = new Task("Task1", Date.valueOf("2015-12-12"), Priority.HIGH);
-        list.add(task);
+        list.add(task);*/
 
-        when(taskDao.getAll()).thenReturn(list);
-        doNothing().when(taskService).checkExpiredTask(anyList());*/
+        //when(cli.taskDaoJdbc.getAll()).thenReturn(new ArrayList<>());
+        doNothing().when(cli.taskDao.getAll());
+        doNothing().when(taskService).checkExpiredTask(anyList());
         runCliWithInput("2");
-        /*validateMockitoUsage();
+        validateMockitoUsage();
 
         List<String> output = captureOutput();
+        System.out.println(output.toString());
         verify(taskDao).getAll();
         //verify(testOut, atLeastOnce()).println(captor.capture());
-        assertEquals("Should have 1 output calls", 1, output.size());*/
+        assertEquals("Should have 16 output calls", 16, output.size());
 
     }
 
