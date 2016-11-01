@@ -19,6 +19,14 @@ public class Task {
         this.priority = priority;
     }
 
+    public Task(Integer id, String name, Date deadline, Priority priority, String status) {
+        this.id = id;
+        this.name = name;
+        this.deadline = deadline;
+        this.priority = priority;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }

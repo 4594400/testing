@@ -17,8 +17,7 @@ public class CLI {
     private static final String NEWLINE = System.getProperty("line.separator");
     private final BufferedReader inReader;
     private final PrintStream outStream;
-    //TaskDao taskDao = new TaskDaoJdbcImpl();
-    TaskService taskService = new TaskServiceImpl();
+    private TaskService taskService = new TaskServiceImpl();
 
     public CLI(InputStream inputStream, PrintStream outStream) {
         this.inReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -170,5 +169,13 @@ public class CLI {
 
     public void printSeparator(StringBuilder builder) {
         builder.append("-------------------------------------------------------------------------------------").append(NEWLINE);
+    }
+
+    public TaskService getTaskService() {
+        return taskService;
+    }
+
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
     }
 }
