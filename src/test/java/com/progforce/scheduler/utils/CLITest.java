@@ -27,9 +27,8 @@ public class CLITest {
     private PrintStream testOut;
     @Mock
     private InputStream testIn;
-
     @Mock
-    TaskService taskService;
+    private TaskService taskService;
 
 
     /**
@@ -68,13 +67,6 @@ public class CLITest {
         assertEquals("Should have 15 output calls", 15, output.size());
         verify(taskService, times(2)).getAll();
         assertEquals(2, taskService.getAll().size());
-    }
-
-    @Test
-    public void testGetTaskById() {
-        Task task = new Task(3, "Task3", Date.valueOf("2015-05-06"), Priority.HIGH, "EXPIRED");
-        when(taskService.getById(anyInt())).thenReturn(task);
-        assertEquals("Task3", taskService.getById(3).getName());
     }
 
     @Test

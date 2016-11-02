@@ -18,18 +18,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getById(int id) {
-        return taskDao.getById(id);
-    }
-
-    @Override
     public List<Task> getAll() {
         return taskDao.getAll();
-    }
-
-    @Override
-    public void updateStatus(String status, int id) {
-        taskDao.updateStatus(status, id);
     }
 
     @Override

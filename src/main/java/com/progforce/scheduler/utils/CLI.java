@@ -1,8 +1,6 @@
 package com.progforce.scheduler.utils;
 
 
-import com.progforce.scheduler.dao.TaskDao;
-import com.progforce.scheduler.dao.impl.TaskDaoJdbcImpl;
 import com.progforce.scheduler.model.Priority;
 import com.progforce.scheduler.model.Task;
 import com.progforce.scheduler.service.TaskService;
